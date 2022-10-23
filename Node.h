@@ -2,7 +2,6 @@
 #define NODE_H_
 
 template<class T>
-
 class Node
 {
 	private:
@@ -13,9 +12,11 @@ class Node
 		Node<T> *nextPtr;
 
 	public:
-		Node();
-		Node(const T &anItem);
-		Node(const Node<T> &other);
+		Node() = default;
+		Node(const T &anItem):item(anItem), max(anItem), sum(anItem), mean(anItem){}
+		Node(const Node<T> &other) {
+			Node(other.getItem());
+		}
 		Node(const T &anItem, Node<T> *nextNodePtr);
 		void setItem(const T &anItem);
 		void setNext(Node<T> *nextNodePtr);
@@ -28,6 +29,7 @@ class Node
 		T getItem() const;
 		Node<T> *getNext() const;
 		//setNext();
+
 };
 
 #endif

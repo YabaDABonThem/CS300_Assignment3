@@ -15,9 +15,16 @@ private:
     int count = 0;
 
 public:
-    Stack();
+    Stack(); 
 
-    Stack(const Stack<T> &other);
+    Stack(const Stack<T> &other) { // put an item in the stack
+        // update the max, mean, and sum along with the item
+        Node *stackPtr = topPtr ;
+        while (stackPtr.getNext()) {
+            stackPtr = stackPtr.getNext();
+        }
+    }
+
     Stack<T> &operator=(const Stack<T> &other);
 
     virtual ~Stack();
