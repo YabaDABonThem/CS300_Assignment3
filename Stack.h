@@ -24,7 +24,24 @@ public:
     // }
 
     Stack<T> &operator=(const Stack<T> &other) { // check if values are the same
-        Node *otherPtr = other.peek();
+        // assign the other stack to the 
+        if (this == &other) return *this;
+
+        while (pop()) {} // remove all existing elements in the stack
+        
+        // push all elements from the other stack
+        Node<T> *myListPtr = nullptr;
+        // pointers for the two stacks
+        Node<T> *otherPtr  = other->peek();
+        // Add all nodes into the linked list
+        while (otherPtr) { // Ignore the remainder of the longer stack
+            auto prev = new Node<T>(otherPtr->getItem());
+            prev->setNext(myListPtr);
+            myListPtr = prev;
+            otherPtr = otherPtr->getNext();
+        }
+        // the linked list we copied should be in reverse order
+        // we need to reverse the linked list before we return. 
     }
 
     virtual ~Stack() {
@@ -38,14 +55,14 @@ public:
     }
 
     bool push(const T &newItem) override {
-        head_ = new Node(newItem, head_);
+        head_ = new Node<T>(newItem, head_);
     }
     
     bool pop() override{ // No need to recalculate the values
         if (isEmpty()) { // if the Stack is empty
             return false;
         }
-        Node *prevPtr = head_;
+        Node<T> *prevPtr = head_;
         head_ = head_->getNext();
         delete prevPtr;
         return true;
@@ -73,26 +90,35 @@ public:
         // because then we'd be doing meaningless calculations of max, mean, ...etc
         
         // create the linked list
-        Node *myListHead = new Node(head_); // use pointer of pointer?
-        Node *myListPtr = myListHead; // CODE CURRENTLY WRONG
-        // Should we use Node.h for the LinkedList? Use other "normal" nodes?
+        Node<T> *myListPtr = nullptr;
         // pointers for the two stacks
-        Node *thisPtr = head_;
-        Node *otherPtr = other.peek();
+        Node<T> *p1 = head_;
+        Node<T> *p2 = other.peek();
         // Add all nodes into the linked list
-        while (!thisPtr && !otherPtr) {
-            myListPtr.next = new Node(thisPtr.getValue());
-            myListPtr = MyListPtr.next;
-            myListPtr.next = new Node(otherPtr.getValue());
-            myListPtr = MyListPtr.next;
-        } // extra edge case (not tested): the zippered stacks are not the same length
-
-        Stack zipperStack = new Stack();
-        while(myListHead) { // change variable name or make another variable
-            zipperStack.push(myListHead); // might need to push values or smth
-            myListHead = myListhead.next;
+        // Preconditions:
+        // p1 points to the element in our stack to add
+        // p2 points to the element in the other stack to add
+        // myListPtr points to the combined list so far
+        while (p1 && p2) { // Ignore the remainder of the longer stack
+            auto prev = new Node<T>(p1->getItem());
+            prev->setNext(myListPtr);
+            myListPtr = prev;
+            prev = new Node<T>(p2->getItem());
+            prev->setNext(myListPtr);
+            myListPtr = prev;
+            p1 = p1->getNext();
+            p2 = p2->getNext();
         }
 
+        // push all items into the stack so the order is reversed
+        Stack<T> zipperStack = new Stack<T>();
+        while(myListPtr) { // change variable name or make another variable
+            zipperStack.push(myListPtr->getItem());
+            Node<T> *prev = myListPtr;
+            myListPtr = myListPtr->getNext();
+            delete prev;
+        }
+        return zipperStack;
     }
 
     void display() override;

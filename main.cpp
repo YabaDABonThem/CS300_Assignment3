@@ -2,6 +2,7 @@
 #include "MyRand.h"
 // #include "Stack.cpp"
 #include "Node.h"
+#include "Stack.h"
 // #include "Node.cpp"
 // #include "StackInterface.h"
 

@@ -36,7 +36,9 @@ class Node
 			
 		}
 		// void setItem(const T &anItem);
-		// void setNext(Node<T> *nextNodePtr);
+		void setNext(Node<T> *nextNodePtr) {
+			nextPtr_ = nextNodePtr;
+		}
 		T getMax() const {
 			return max_;
 		}
