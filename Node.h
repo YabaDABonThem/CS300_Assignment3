@@ -6,6 +6,7 @@ template<class T>
 class Node
 {
 	private:
+		// set default values for fields
 		T item_ = {};
 		T max_ = {};
 		T sum_ = {};
@@ -31,7 +32,8 @@ class Node
 				count_ = 1;
 				return;
 			}
-
+			// If there is are existing nodes, then you need to compute values
+			// based off the ones from the previous node.
 			item_ = anItem;
 			max_ = std::max(item_, nextNodePtr->getMax());
 			sum_ = item_ + nextNodePtr->getSum();
@@ -39,22 +41,23 @@ class Node
 			nextPtr_ = nextNodePtr;
 			
 		}
-		// void setItem(const T &anItem);
+		
+		// getters and setters below:
 		void setNext(Node<T> *nextNodePtr) {
 			nextPtr_ = nextNodePtr;
 		}
 		T getMax() const {
 			return max_;
 		}
-		// void setMax(const T &newMax);
+		
 		T getMean() const {
 			return sum_ / count_;
 		}
-		// void setMean(const T &newMean);
+		
 		T getSum() const {
 			return sum_;
 		}
-		// void setSum(const T &newMean);
+		
 		T getItem() const {
 			return item_;
 		}
@@ -66,7 +69,6 @@ class Node
 		Node<T> *getNext() const {
 			return nextPtr_;
 		}
-		//setNext();
 
 };
 

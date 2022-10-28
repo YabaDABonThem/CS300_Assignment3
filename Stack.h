@@ -24,7 +24,7 @@ public:
     }
 
     Stack<T> &operator=(const Stack<T> &other) { // check if values are the same
-        // assign the other stack to the 
+        // no need to do anything if they are already equal
         if (this == &other) return *this;
 
         while (pop()) {} // remove all existing elements in the stack
@@ -131,12 +131,13 @@ public:
         return zipperStack;
     }
     
-    void display() const override {
+    void display() override { // print out string representation of the stack
         Node<T> *ptr = head_;
         while (ptr) {
-            std::cout << ptr->getItem() << " ";
+            std::cout << ptr->getItem() << "->";
             ptr = ptr->getNext();
         }
+        std::cout << "NULL";
         
     }
 };

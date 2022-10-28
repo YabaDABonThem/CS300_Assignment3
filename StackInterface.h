@@ -10,7 +10,7 @@ public:
     virtual T peek() const = 0;
     virtual T max() const = 0;
     virtual T mean() const = 0;
-    virtual void display() const = 0;
+    virtual void display() = 0;
 
     virtual ~StackInterface() {}
 };
