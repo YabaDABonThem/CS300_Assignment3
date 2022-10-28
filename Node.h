@@ -6,11 +6,11 @@ template<class T>
 class Node
 {
 	private:
-		T item_;
-		T max_;
-		T sum_;
-		T count_;
-		Node<T> *nextPtr_;
+		T item_ = {};
+		T max_ = {};
+		T sum_ = {};
+		T count_ = {};
+		Node<T> *nextPtr_ = nullptr;
 
 	public:
 		Node() = delete;
@@ -25,7 +25,10 @@ class Node
 			// Recompute these values. 
 			// check if you are the only Node
 			if (nextNodePtr == nullptr) {
-				Node(anItem);
+				item_ = anItem;
+				max_ = anItem;
+				sum_ = anItem;
+				count_ = 1;
 				return;
 			}
 
@@ -33,6 +36,7 @@ class Node
 			max_ = std::max(item_, nextNodePtr->getMax());
 			sum_ = item_ + nextNodePtr->getSum();
 			count_ = nextNodePtr->getCount() + 1;
+			nextPtr_ = nextNodePtr;
 			
 		}
 		// void setItem(const T &anItem);

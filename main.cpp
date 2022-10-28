@@ -1,10 +1,10 @@
 #include <iostream>
 #include "MyRand.h"
-// #include "Stack.cpp"
+#include "Stack.cpp"
 #include "Node.h"
 #include "Stack.h"
-// #include "Node.cpp"
-// #include "StackInterface.h"
+#include "Node.cpp"
+#include "StackInterface.h"
 
 using namespace std;
 
@@ -109,9 +109,7 @@ int main(){
         test2();
         test3();
         test4();
-    }
-
-    catch (exception e){
+    } catch (exception e){
         cout << e.what() << endl;
     }
     cout << "Your total correctness score is: " << score << endl;

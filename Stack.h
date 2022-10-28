@@ -1,11 +1,12 @@
 #ifndef STACK_H_
 #define STACK_H_
 
-#define INT_MIN -999999
+// #define INT_MIN -999999
 
 #include <stdexcept> 
 #include "StackInterface.h"
 #include "Node.h"
+#include <iostream>
 
 template <class T>
 
@@ -13,15 +14,14 @@ class Stack : public StackInterface<T>
 {
 private:
     Node<T> *head_;
-    // int size = 0; // nums items
 
 public:
     // create empty stack
-    Stack(); 
+    Stack() : head_(nullptr) {}
 
-    // Stack(const Stack<T> &other) { // copy constructor
-
-    // }
+    Stack(const Stack<T> &other) { // copy constructor
+        *this = other;
+    }
 
     Stack<T> &operator=(const Stack<T> &other) { // check if values are the same
         // assign the other stack to the 
@@ -32,7 +32,7 @@ public:
         // push all elements from the other stack
         Node<T> *myListPtr = nullptr;
         // pointers for the two stacks
-        Node<T> *otherPtr  = other->peek();
+        Node<T> *otherPtr  = other.head_;
         // Add all nodes into the linked list
         while (otherPtr) { // Ignore the remainder of the longer stack
             auto prev = new Node<T>(otherPtr->getItem());
@@ -40,22 +40,32 @@ public:
             myListPtr = prev;
             otherPtr = otherPtr->getNext();
         }
-        // the linked list we copied should be in reverse order
-        // we need to reverse the linked list before we return. 
+        // we have a reversed linked list, now we push it into a stack to make it normal.
+        while(myListPtr) {
+            push(myListPtr->getItem());
+            Node<T> *prev = myListPtr;
+            myListPtr = myListPtr->getNext();
+            delete prev;
+        }
+        return *this;
+        // we don't need to change head because just reversed it twice
+        // so the order is still the same.
     }
 
-    virtual ~Stack() {
+    ~Stack() override {
         while (pop()) {
             // continuously removes items until empty
         }
     }
 
     bool isEmpty() const override {
-        return head_; // head auto casts to boolean with bool return type
+        return !head_; // head auto casts to boolean with bool return type
     }
 
     bool push(const T &newItem) override {
+        // in what scenario would you need to return false?
         head_ = new Node<T>(newItem, head_);
+        return true;
     }
     
     bool pop() override{ // No need to recalculate the values
@@ -93,7 +103,7 @@ public:
         Node<T> *myListPtr = nullptr;
         // pointers for the two stacks
         Node<T> *p1 = head_;
-        Node<T> *p2 = other.peek();
+        Node<T> *p2 = other.head_;
         // Add all nodes into the linked list
         // Preconditions:
         // p1 points to the element in our stack to add
@@ -111,7 +121,7 @@ public:
         }
 
         // push all items into the stack so the order is reversed
-        Stack<T> zipperStack = new Stack<T>();
+        Stack<T> zipperStack;
         while(myListPtr) { // change variable name or make another variable
             zipperStack.push(myListPtr->getItem());
             Node<T> *prev = myListPtr;
@@ -120,7 +130,14 @@ public:
         }
         return zipperStack;
     }
-
-    void display() override;
+    
+    void display() const override {
+        Node<T> *ptr = head_;
+        while (ptr) {
+            std::cout << ptr->getItem() << " ";
+            ptr = ptr->getNext();
+        }
+        
+    }
 };
 #endif
