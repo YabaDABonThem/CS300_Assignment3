@@ -17,10 +17,6 @@ class Node
 		Node() = delete;
 		// constructor is called when there are no items in the stack
 		Node(const T &anItem):item_(anItem), max_(anItem), sum_(anItem), count_(1){}
-
-		// Node(const Node<T> &other) {
-		// 	Node(other.getItem());
-		// }
 		
 		Node(const T &anItem, Node<T> *nextNodePtr) {
 			// Recompute these values. 

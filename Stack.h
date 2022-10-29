@@ -1,8 +1,6 @@
 #ifndef STACK_H_
 #define STACK_H_
 
-// #define INT_MIN -999999
-
 #include <stdexcept> 
 #include "StackInterface.h"
 #include "Node.h"
