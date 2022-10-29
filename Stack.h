@@ -32,7 +32,7 @@ public:
         // pointers for the two stacks
         Node<T> *otherPtr  = other.head_;
         // Add all nodes into the linked list
-        while (otherPtr) { // Ignore the remainder of the longer stack
+        while (otherPtr) {
             auto prev = new Node<T>(otherPtr->getItem());
             prev->setNext(myListPtr);
             myListPtr = prev;
